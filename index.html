@@ -3,854 +3,289 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Market Activity Update — 1130 Quince Street</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@0;1&family=Roboto:wght@300;400;500;700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+<title>Inspection Resolution Comparison</title>
 <style>
-  :root{
-    --navy:#3057A7;
-    --blue:#5EA1C3;
-    --gold:#FFD372;
-    --tan:#85714D;
-    --gray:#575B5C;
-    --light-bg:#F5F7FA;
-    --card-bg:#FFFFFF;
-    --sold-green:#2E7D4F;
-    --sold-green-bg:#E5F3EA;
-    --active-gold:#9C7A1A;
-    --active-gold-bg:#FFF4D9;
-    --border-light:#E1E5EA;
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-weight: 300;
+    color: #575B5C;
+    background: #F4F6F7;
+  }
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    background: #ffffff;
+  }
+  .header {
+    background: #3057A7;
+    color: #ffffff;
+    padding: 36px 40px 30px;
+  }
+  .header .brand {
+    font-family: Georgia, 'Libre Baskerville', serif;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+    margin: 0 0 4px;
+  }
+  .header .brand .light { font-weight: 300; opacity: 0.85; }
+  .header .tagline {
+    font-size: 13px;
+    color: #FFD372;
+    margin: 0 0 18px;
+    letter-spacing: 0.5px;
+  }
+  .header h1 {
+    font-size: 22px;
+    font-weight: 500;
+    margin: 10px 0 6px;
+  }
+  .header .subtitle {
+    font-size: 14px;
+    color: #d9e6f2;
+    margin: 0;
+  }
+  .property-bar {
+    background: #5EA1C3;
+    color: #ffffff;
+    padding: 12px 40px;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .property-bar span strong { color: #ffffff; }
+  .content { padding: 32px 40px 40px; }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #5EA1C3;
+    margin: 0 0 14px;
   }
 
-  *{box-sizing:border-box;}
+  table.compare {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-bottom: 8px;
+  }
+  table.compare th, table.compare td {
+    border: 1px solid #E0E3E5;
+    padding: 12px 14px;
+    font-size: 14px;
+    vertical-align: top;
+  }
+  table.compare th {
+    background: #3057A7;
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 13px;
+    text-align: left;
+  }
+  table.compare col.label { width: 34%; }
+  table.compare col.seller { width: 33%; }
+  table.compare col.buyer { width: 33%; }
+  table.compare td.label {
+    background: #F4F6F7;
+    font-weight: 700;
+    color: #3057A7;
+  }
+  table.compare td.num {
+    font-weight: 700;
+    color: #575B5C;
+  }
+  table.compare tr.total td {
+    background: #FBF4E3;
+    font-weight: 700;
+    border-top: 2px solid #FFD372;
+  }
+  table.compare tr.total td.label { color: #3057A7; }
+  .strike { text-decoration: line-through; color: #9aa1a3; font-weight: 400; }
 
-  body{
-    margin:0;
-    font-family:'Roboto',sans-serif;
-    font-weight:300;
-    color:var(--gray);
-    background:#fff;
-    line-height:1.6;
-    font-size:15px;
+  .callout {
+    margin: 28px 0;
+    padding: 22px 26px;
+    background: #3057A7;
+    border-radius: 6px;
+    color: #ffffff;
   }
+  .callout .callout-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #FFD372;
+    margin: 0 0 10px;
+  }
+  .callout p { margin: 0 0 10px; font-size: 14.5px; line-height: 1.55; color: #e8edf5; }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout .price-line {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin: 14px 0 6px;
+    flex-wrap: wrap;
+  }
+  .callout .price-line .old { font-size: 20px; text-decoration: line-through; color: #aebede; }
+  .callout .price-line .arrow { color: #FFD372; font-size: 18px; }
+  .callout .price-line .new { font-size: 26px; font-weight: 700; color: #FFD372; }
 
-  .page{
-    max-width:1000px;
-    margin:0 auto;
-    background:#fff;
+  .equiv-box {
+    margin-top: 30px;
+    padding: 20px 24px;
+    border: 2px solid #FFD372;
+    border-radius: 6px;
+    background: #FFFBF0;
   }
+  .equiv-box .section-label { color: #85714D; }
+  .equiv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .equiv-col {
+    background: #ffffff;
+    border: 1px solid #E5DDC8;
+    border-radius: 4px;
+    padding: 14px 16px;
+  }
+  .equiv-col .equiv-title {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #5EA1C3;
+    margin: 0 0 8px;
+  }
+  .equiv-col .equiv-amount {
+    font-size: 22px;
+    font-weight: 700;
+    color: #3057A7;
+    margin: 0;
+  }
+  .equiv-col .equiv-sub { font-size: 12px; color: #8a9094; margin: 4px 0 0; }
 
-  /* ===== HEADER ===== */
-  header.brand-header{
-    background:var(--navy);
-    color:#fff;
-    padding:28px 36px 22px;
-    position:relative;
+  .footer {
+    padding: 22px 40px 30px;
+    border-top: 1px solid #E0E3E5;
+    font-size: 12px;
+    color: #9aa1a3;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
-  .header-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-    flex-wrap:wrap;
-    gap:16px;
-  }
-  .property-address-block .eyebrow{
-    text-transform:uppercase;
-    letter-spacing:0.12em;
-    font-size:11px;
-    color:var(--gold);
-    font-weight:500;
-    margin-bottom:6px;
-    font-family:'Oswald',sans-serif;
-  }
-  .property-address-block h1{
-    margin:0;
-    font-family:'Libre Baskerville',serif;
-    font-size:26px;
-    font-weight:700;
-    line-height:1.25;
-  }
-  .property-address-block .city{
-    font-size:15px;
-    color:#D7E2F3;
-    margin-top:2px;
-  }
-  .brand-block{
-    text-align:right;
-  }
-  .brand-block .wordmark{
-    font-family:'Libre Baskerville',serif;
-    font-style:italic;
-    font-size:22px;
-    font-weight:700;
-    color:#fff;
-  }
-  .brand-block .wordmark .and-assoc{
-    font-style:normal;
-    font-weight:300;
-    font-size:16px;
-    color:var(--gold);
-    margin-left:4px;
-  }
-  .brand-block .tagline{
-    font-size:12px;
-    color:#D7E2F3;
-    margin-top:2px;
-    letter-spacing:0.02em;
-  }
-  .brand-block .contact-line{
-    font-size:12.5px;
-    color:#fff;
-    margin-top:10px;
-  }
-  .brand-block .contact-line a{
-    color:#fff;
-    text-decoration:none;
-  }
-  .gold-accent-bar{
-    height:6px;
-    background:linear-gradient(90deg, var(--gold), var(--tan));
-    width:100%;
-  }
+  .footer a { color: #5EA1C3; text-decoration: none; }
 
-  /* ===== ADDRESS HERO / SPECS ===== */
-  .specs-hero{
-    background:var(--light-bg);
-    padding:24px 36px;
-    border-bottom:1px solid var(--border-light);
-  }
-  .specs-grid{
-    display:grid;
-    grid-template-columns:repeat(6, 1fr);
-    gap:14px;
-    margin-bottom:18px;
-  }
-  .spec-cell{
-    background:var(--card-bg);
-    border:1px solid var(--border-light);
-    border-radius:6px;
-    padding:12px 10px;
-    text-align:center;
-  }
-  .spec-cell .val{
-    font-family:'Oswald',sans-serif;
-    font-size:19px;
-    font-weight:600;
-    color:var(--navy);
-  }
-  .spec-cell .lbl{
-    font-size:10.5px;
-    text-transform:uppercase;
-    letter-spacing:0.05em;
-    color:var(--gray);
-    margin-top:3px;
-  }
-  .list-price-row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    background:var(--navy);
-    border-radius:6px;
-    padding:16px 22px;
-    flex-wrap:wrap;
-    gap:10px;
-  }
-  .list-price-row .lp-label{
-    color:#D7E2F3;
-    text-transform:uppercase;
-    letter-spacing:0.08em;
-    font-size:12px;
-    font-family:'Oswald',sans-serif;
-  }
-  .list-price-row .lp-value{
-    color:var(--gold);
-    font-family:'Oswald',sans-serif;
-    font-size:30px;
-    font-weight:600;
-  }
-  .list-price-row .lp-sub{
-    color:#fff;
-    font-size:13px;
-  }
-
-  /* ===== SECTION GENERIC ===== */
-  section{
-    padding:30px 36px;
-    border-bottom:1px solid var(--border-light);
-  }
-  .section-title{
-    font-family:'Oswald',sans-serif;
-    font-size:13px;
-    text-transform:uppercase;
-    letter-spacing:0.1em;
-    color:var(--blue);
-    font-weight:600;
-    border-left:4px solid var(--blue);
-    padding-left:10px;
-    margin:0 0 18px;
-  }
-
-  /* ===== VALUATION SUMMARY ===== */
-  .valuation-summary{
-    display:flex;
-    gap:18px;
-    flex-wrap:wrap;
-  }
-  .val-card{
-    flex:1 1 200px;
-    background:var(--light-bg);
-    border-radius:6px;
-    padding:16px;
-    text-align:center;
-  }
-  .val-card .v-num{
-    font-family:'Oswald',sans-serif;
-    font-size:22px;
-    font-weight:600;
-    color:var(--navy);
-  }
-  .val-card .v-lbl{
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:0.05em;
-    color:var(--gray);
-    margin-top:4px;
-  }
-
-  /* ===== MARKET CONTEXT STATS ROW ===== */
-  .stats-row{
-    display:grid;
-    grid-template-columns:repeat(5, 1fr);
-    gap:14px;
-  }
-  .stat-box{
-    background:linear-gradient(160deg, var(--navy), #284A8C);
-    border-radius:6px;
-    padding:16px 10px;
-    text-align:center;
-    color:#fff;
-  }
-  .stat-box .s-num{
-    font-family:'Oswald',sans-serif;
-    font-size:21px;
-    font-weight:600;
-    color:var(--gold);
-  }
-  .stat-box .s-lbl{
-    font-size:10.5px;
-    text-transform:uppercase;
-    letter-spacing:0.04em;
-    color:#D7E2F3;
-    margin-top:4px;
-  }
-
-  /* ===== TABLES ===== */
-  .table-scroll{
-    overflow-x:auto;
-    border:1px solid var(--border-light);
-    border-radius:6px;
-  }
-  table.comp-table{
-    border-collapse:collapse;
-    width:100%;
-    min-width:880px;
-  }
-  table.comp-table th{
-    background:var(--navy);
-    color:#fff;
-    font-family:'Oswald',sans-serif;
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:0.04em;
-    font-weight:500;
-    padding:11px 12px;
-    text-align:left;
-    white-space:nowrap;
-  }
-  table.comp-table td{
-    padding:11px 12px;
-    border-bottom:1px solid var(--border-light);
-    font-size:13.5px;
-    white-space:nowrap;
-    color:var(--gray);
-  }
-  table.comp-table tr:last-child td{
-    border-bottom:none;
-  }
-  table.comp-table tr:nth-child(even){
-    background:#FAFBFC;
-  }
-  table.comp-table td.addr a{
-    color:var(--navy);
-    text-decoration:none;
-    font-weight:500;
-    border-bottom:1px dotted var(--blue);
-  }
-  .status-tag{
-    display:inline-block;
-    padding:3px 10px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:500;
-    text-transform:uppercase;
-    letter-spacing:0.03em;
-  }
-  .status-sold{ background:var(--sold-green-bg); color:var(--sold-green); }
-  .status-active{ background:var(--active-gold-bg); color:var(--active-gold); }
-  .status-pending{ background:#E2EBF7; color:var(--navy); }
-
-  .table-caption{
-    font-size:12px;
-    color:var(--tan);
-    margin-top:8px;
-    font-style:italic;
-  }
-  td.addr-plain{
-    font-weight:500;
-    color:#26313B;
-  }
-  .city-tag{
-    font-size:10.5px;
-    color:var(--tan);
-    font-weight:400;
-    margin-left:6px;
-  }
-  .dom-callout-row{
-    display:grid;
-    grid-template-columns:repeat(3, 1fr);
-    gap:14px;
-    margin-top:18px;
-  }
-  .dom-callout{
-    background:var(--light-bg);
-    border:1px solid var(--border-light);
-    border-radius:6px;
-    padding:14px;
-    text-align:center;
-  }
-  .dom-callout .d-num{
-    font-family:'Oswald',sans-serif;
-    font-size:20px;
-    font-weight:600;
-    color:var(--navy);
-  }
-  .dom-callout .d-lbl{
-    font-size:10.5px;
-    text-transform:uppercase;
-    letter-spacing:0.04em;
-    color:var(--gray);
-    margin-top:4px;
-  }
-
-  /* ===== POSITIONING ANALYSIS ===== */
-  .positioning-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:20px;
-  }
-  .pos-box{
-    border-radius:6px;
-    padding:20px;
-  }
-  .pos-box.strengths{
-    background:#EEF6EF;
-    border:1px solid #CFE6D2;
-  }
-  .pos-box.considerations{
-    background:#FFF6E8;
-    border:1px solid #F0DEB6;
-  }
-  .pos-box h3{
-    margin:0 0 12px;
-    font-family:'Oswald',sans-serif;
-    font-size:13px;
-    text-transform:uppercase;
-    letter-spacing:0.06em;
-  }
-  .pos-box.strengths h3{ color:var(--sold-green); }
-  .pos-box.considerations h3{ color:var(--tan); }
-  .pos-box ul{
-    margin:0;
-    padding-left:18px;
-  }
-  .pos-box li{
-    margin-bottom:11px;
-    font-size:13.5px;
-  }
-  .pos-box li strong{
-    color:#26313B;
-    font-weight:500;
-  }
-
-  /* ===== NARRATIVE ===== */
-  .narrative p{
-    margin:0 0 16px;
-    font-size:14px;
-    line-height:1.75;
-  }
-  .narrative p:last-child{margin-bottom:0;}
-
-  /* ===== RECOMMENDATION ===== */
-  .recommendation-box{
-    background:linear-gradient(135deg, var(--navy), #243F73);
-    border-radius:8px;
-    padding:28px 32px;
-    color:#fff;
-  }
-  .recommendation-box .rec-label{
-    text-transform:uppercase;
-    letter-spacing:0.1em;
-    font-size:12px;
-    color:#D7E2F3;
-    font-family:'Oswald',sans-serif;
-  }
-  .recommendation-box .rec-value{
-    font-family:'Oswald',sans-serif;
-    font-size:40px;
-    font-weight:600;
-    color:var(--gold);
-    margin:6px 0 16px;
-  }
-  .rec-justify{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
-  }
-  .rec-justify div{
-    background:rgba(255,255,255,0.08);
-    border-radius:6px;
-    padding:12px 14px;
-    font-size:13px;
-    line-height:1.5;
-  }
-  .rec-justify strong{
-    color:var(--gold);
-  }
-
-  /* ===== DISCLAIMER ===== */
-  .disclaimer{
-    font-size:12px;
-    color:var(--gray);
-    font-style:italic;
-    line-height:1.6;
-    padding:20px 36px;
-    border-bottom:1px solid var(--border-light);
-  }
-
-  /* ===== FOOTER ===== */
-  footer{
-    background:var(--navy);
-    color:#fff;
-    padding:20px 36px;
-    text-align:center;
-    font-size:12.5px;
-  }
-  footer .foot-brand{
-    font-family:'Libre Baskerville',serif;
-    font-weight:700;
-    font-size:15px;
-    margin-bottom:6px;
-  }
-  footer .foot-brand .and-assoc{
-    font-weight:300;
-    color:var(--gold);
-  }
-  footer .foot-meta{
-    color:#C8D6EC;
-    margin-top:4px;
-  }
-  footer .foot-tagline{
-    color:var(--gold);
-    margin-top:8px;
-    font-style:italic;
-  }
-
-  @media print{
-    body{font-size:13px;}
-    section{padding:20px 28px;}
-  }
-
-  @media (max-width:720px){
-    .specs-grid{grid-template-columns:repeat(3, 1fr);}
-    .stats-row{grid-template-columns:repeat(2, 1fr);}
-    .positioning-grid{grid-template-columns:1fr;}
-    .rec-justify{grid-template-columns:1fr;}
-    .header-row{flex-direction:column;}
-    .brand-block{text-align:left;}
+  @media (max-width: 600px) {
+    .header, .content, .footer { padding-left: 20px; padding-right: 20px; }
+    .property-bar { padding-left: 20px; padding-right: 20px; flex-direction: column; gap: 4px; }
+    .equiv-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
 <body>
 <div class="page">
 
-  <header class="brand-header">
-    <div class="header-row">
-      <div class="property-address-block">
-        <div class="eyebrow">Market Activity Update</div>
-        <h1>1130 Quince Street</h1>
-        <div class="city">Denver, CO 80220</div>
+  <div class="header">
+    <p class="brand"><span class="light">Freedle</span> And Associates</p>
+    <p class="tagline">Helping You Find Your Place.</p>
+    <h1>Inspection Resolution — Comparison of Terms</h1>
+    <p class="subtitle">Seller's Current Offer vs. Buyer's Proposed Resolution</p>
+  </div>
+
+  <div class="property-bar">
+    <span>Purchase Price: <strong>$565,000</strong></span>
+    <span>Status: <strong>Inspection Objection Resolution</strong></span>
+  </div>
+
+  <div class="content">
+
+    <p class="section-label">Side-by-Side Comparison</p>
+    <table class="compare">
+      <colgroup>
+        <col class="label"><col class="seller"><col class="buyer">
+      </colgroup>
+      <tr>
+        <th>Item</th>
+        <th>Seller's Current Offer</th>
+        <th>Buyer's Proposed Resolution</th>
+      </tr>
+      <tr>
+        <td class="label">Purchase Price</td>
+        <td class="num">$565,000</td>
+        <td class="num">$561,700</td>
+      </tr>
+      <tr>
+        <td class="label">General Concessions</td>
+        <td class="num">$8,380</td>
+        <td class="num">$0</td>
+      </tr>
+      <tr>
+        <td class="label">Cut Joist Repair (seller cost)</td>
+        <td class="num">$0</td>
+        <td class="num">$2,500</td>
+      </tr>
+      <tr>
+        <td class="label">Roof Upgrade to Class 4 Shingle (seller cost)</td>
+        <td class="num">$0</td>
+        <td class="num">$1,620</td>
+      </tr>
+      <tr>
+        <td class="label">Buyer Commission Contribution (seller cost)</td>
+        <td class="num">$0</td>
+        <td class="num">$1,695</td>
+      </tr>
+      <tr>
+        <td class="label">Home Warranty</td>
+        <td class="num">$735</td>
+        <td class="num">$0</td>
+      </tr>
+      <tr class="total">
+        <td class="label">Total Dollar Value to Seller</td>
+        <td class="num">$9,115</td>
+        <td class="num">$9,115</td>
+      </tr>
+    </table>
+
+    <div class="callout">
+      <p class="callout-label">What We're Actually Asking For</p>
+      <p>This is not a bigger ask than the seller's own offer. It is the same dollar amount, structured differently: $9,115 either way. Instead of concessions and a warranty that leave the joist unresolved and push the roof upgrade onto the buyer, that same $9,115 becomes a price reduction plus the seller completing every repair outright.</p>
+      <div class="price-line">
+        <span class="old">$565,000</span>
+        <span class="arrow">&#8594;</span>
+        <span class="new">$561,700</span>
       </div>
-      <div class="brand-block">
-        <div class="wordmark">Freedle<span class="and-assoc">And Associates</span></div>
-        <div class="tagline">Helping You Find Your Place.</div>
-        <div class="contact-line">
-          Jake Freedle, CNE &nbsp;|&nbsp; 720-934-6583<br>
-          <a href="mailto:jake@gofreedle.com">jake@gofreedle.com</a> &nbsp;|&nbsp; <a href="https://gofreedle.com">gofreedle.com</a>
+      <p>A $3,300 reduction in purchase price, with the seller completing the joist repair ($2,500), replacing the roof in full including the upgraded Class 4 shingle ($1,620), and contributing $1,695 toward the buyer's commission.</p>
+    </div>
+
+    <div class="equiv-box">
+      <p class="section-label">Confirming the Math — $9,115 = $9,115</p>
+      <div class="equiv-grid">
+        <div class="equiv-col">
+          <p class="equiv-title">Seller's Offer</p>
+          <p class="equiv-amount">$9,115</p>
+          <p class="equiv-sub">$8,380 concessions + $735 warranty. Joist repair left unresolved; buyer pays $1,620 of the roof.</p>
+        </div>
+        <div class="equiv-col">
+          <p class="equiv-title">Buyer's Proposal</p>
+          <p class="equiv-amount">$9,115</p>
+          <p class="equiv-sub">$3,300 price reduction + $2,500 joist + $1,620 roof upgrade + $1,695 commission. Every item fully resolved.</p>
         </div>
       </div>
     </div>
-  </header>
-  <div class="gold-accent-bar"></div>
 
-  <div class="specs-hero">
-    <div class="specs-grid">
-      <div class="spec-cell"><div class="val">3</div><div class="lbl">Bedrooms</div></div>
-      <div class="spec-cell"><div class="val">1</div><div class="lbl">Bathrooms</div></div>
-      <div class="spec-cell"><div class="val">1,128</div><div class="lbl">Sq Ft Total</div></div>
-      <div class="spec-cell"><div class="val">1948</div><div class="lbl">Year Built</div></div>
-      <div class="spec-cell"><div class="val">0.13 ac</div><div class="lbl">Lot Size</div></div>
-      <div class="spec-cell"><div class="val">2-Car</div><div class="lbl">Detached Garage</div></div>
-    </div>
-    <div class="list-price-row">
-      <div>
-        <div class="lp-label">Current List Price</div>
-        <div class="lp-value">$450,000</div>
-      </div>
-      <div class="lp-sub">$399 / sq ft &nbsp;&middot;&nbsp; Listed in a 6-comp neighborhood data set</div>
-    </div>
   </div>
 
-  <section>
-    <h2 class="section-title">Online Property Traffic Snapshot</h2>
-    <div class="table-scroll">
-      <table class="comp-table" style="min-width:0;">
-        <thead>
-          <tr><th>Platform</th><th>Views</th><th>Saves / Favorites</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Zillow</td><td>651</td><td>38</td></tr>
-          <tr><td>Redfin</td><td>111</td><td>3</td></tr>
-          <tr><td>Homes.com</td><td>568</td><td>N/A</td></tr>
-          <tr><td>Instagram</td><td>339</td><td>125 engagements</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-caption">Search platform statistics cross-referenced with internal tracking file, Full_Property_View6420.pdf. Instagram metrics reflect post-level views and engagements (likes, comments, shares, saves).</div>
-  </section>
-
-  <section>
-    <h2 class="section-title">Neighborhood Market Metrics</h2>
-    <div class="stats-row">
-      <div class="stat-box"><div class="s-num">6</div><div class="s-lbl">Comps Reviewed</div></div>
-      <div class="stat-box"><div class="s-num">$498,667</div><div class="s-lbl">Avg Close Price</div></div>
-      <div class="stat-box"><div class="s-num">$504,000</div><div class="s-lbl">Median Close Price</div></div>
-      <div class="stat-box"><div class="s-num">$479.50</div><div class="s-lbl">Avg PSF Above Grade</div></div>
-      <div class="stat-box"><div class="s-num">37.8 days</div><div class="s-lbl">Avg Days on Market</div></div>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="section-title">Comparable Market Data</h2>
-    <div class="table-scroll">
-      <table class="comp-table">
-        <thead>
-          <tr>
-            <th>Address</th>
-            <th>Beds/Baths</th>
-            <th>SqFt Total</th>
-            <th>Orig. List</th>
-            <th>Close Price</th>
-            <th>PSF Above Grade</th>
-            <th>DOM</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="addr"><a href="https://www.zillow.com/homes/1191-Niagara-St-Denver-CO_rb/" target="_blank" rel="noopener">1191 Niagara Street</a></td>
-            <td>2 / 1</td><td>1,102</td><td>$548,400</td><td>$538,000</td><td>$488</td><td>14</td>
-            <td><span class="status-tag status-sold">Sold (06/12)</span></td>
-          </tr>
-          <tr>
-            <td class="addr"><a href="https://www.zillow.com/homes/1154-Verbena-St-Denver-CO_rb/" target="_blank" rel="noopener">1154 Verbena Street</a></td>
-            <td>2 / 2</td><td>1,232</td><td>$508,000</td><td>$508,000</td><td>$566</td><td>0</td>
-            <td><span class="status-tag status-sold">Sold (05/28)</span></td>
-          </tr>
-          <tr>
-            <td class="addr"><a href="https://www.zillow.com/homes/1285-Roslyn-St-Denver-CO_rb/" target="_blank" rel="noopener">1285 Roslyn Street</a></td>
-            <td>3 / 2</td><td>1,236</td><td>$549,900</td><td>$500,000</td><td>$405</td><td>73</td>
-            <td><span class="status-tag status-sold">Sold (02/19)</span></td>
-          </tr>
-          <tr>
-            <td class="addr"><a href="https://www.zillow.com/homes/1225-Roslyn-St-Denver-CO_rb/" target="_blank" rel="noopener">1225 Roslyn Street</a></td>
-            <td>3 / 2</td><td>1,255</td><td>$450,000</td><td>$450,000</td><td>$359</td><td>0</td>
-            <td><span class="status-tag status-sold">Sold (04/22)</span></td>
-          </tr>
-          <tr>
-            <td class="addr"><a href="https://www.zillow.com/homes/1435-Quebec-St-Denver-CO_rb/" target="_blank" rel="noopener">1435 Quebec Street</a></td>
-            <td>3 / 3</td><td>1,464</td><td>$479,000</td><td>$474,000</td><td>$648</td><td>76</td>
-            <td><span class="status-tag status-active">Active</span></td>
-          </tr>
-          <tr>
-            <td class="addr"><a href="https://www.zillow.com/homes/1220-Ulster-St-Denver-CO_rb/" target="_blank" rel="noopener">1220 Ulster Street</a></td>
-            <td>3 / 2</td><td>916</td><td>$435,000</td><td>$435,000</td><td>$475</td><td>3</td>
-            <td><span class="status-tag status-active">Active</span></td>
-          </tr>
-          <tr>
-            <td class="addr"><a href="https://www.zillow.com/homes/1343-Valentia-St-Denver-CO_rb/" target="_blank" rel="noopener">1343 Valentia Street</a></td>
-            <td>3 / 2</td><td>1,485</td><td>$440,000</td><td>$425,000</td><td>$429</td><td>97</td>
-            <td><span class="status-tag status-active">Active</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="section-title">Extended Market Area &amp; Days-on-Market Trends</h2>
-    <p style="font-size:13.5px; margin:0 0 18px; color:var(--gray);">A broader 38-listing data pull across Denver 80220/80207 and Aurora 80010 confirms the seasonal slowdown referenced in the narrative below and gives a wider read on time-to-contract for comparable 1920s&ndash;1950s-era homes. These listings are shown for market-trend context. Several fall outside the immediate comp set due to city, lot, or build-year differences and are not used to set the recommended price.</p>
-    <div class="dom-callout-row">
-      <div class="dom-callout"><div class="d-num">46.1 days</div><div class="d-lbl">Avg DOM, Denver Sold (13)</div></div>
-      <div class="dom-callout"><div class="d-num">29 days</div><div class="d-lbl">Median DOM, Denver Sold</div></div>
-      <div class="dom-callout"><div class="d-num">56.2 days</div><div class="d-lbl">Avg DOM, Aurora Sold (13)</div></div>
-    </div>
-    <div class="table-scroll" style="margin-top:20px;">
-      <table class="comp-table">
-        <thead>
-          <tr>
-            <th>Address</th>
-            <th>Beds/Baths</th>
-            <th>SqFt Total</th>
-            <th>Orig. List</th>
-            <th>Close Price</th>
-            <th>PSF Above Grade</th>
-            <th>DOM</th>
-            <th>Year Built</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="addr-plain">1225 Roslyn Street <span class="city-tag">Denver</span></td>
-            <td>3 / 2</td><td>1,255</td><td>$450,000</td><td>$450,000</td><td>$359</td><td>0</td><td>1945</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">2055 Syracuse Street <span class="city-tag">Denver</span></td>
-            <td>2 / 1</td><td>829</td><td>$399,900</td><td>$410,000</td><td>$495</td><td>2</td><td>1949</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1948 Wabash Street <span class="city-tag">Denver</span></td>
-            <td>2 / 1</td><td>1,054</td><td>$420,000</td><td>$423,000</td><td>$448</td><td>3</td><td>1932</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">2540 Magnolia Street <span class="city-tag">Denver</span></td>
-            <td>2 / 1</td><td>840</td><td>$400,000</td><td>$420,000</td><td>$500</td><td>4</td><td>1947</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">2921 Jasmine Street <span class="city-tag">Denver</span></td>
-            <td>3 / 1</td><td>893</td><td>$415,000</td><td>$400,000</td><td>$448</td><td>13</td><td>1948</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">2850 Kearney Street <span class="city-tag">Denver</span></td>
-            <td>3 / 1</td><td>1,420</td><td>$525,000</td><td>$429,400</td><td>$302</td><td>17</td><td>1947</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1956 Valentia Street <span class="city-tag">Denver</span></td>
-            <td>3 / 2</td><td>1,248</td><td>$500,000</td><td>$465,000</td><td>$373</td><td>29</td><td>1948</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1621 Olive Street <span class="city-tag">Denver</span></td>
-            <td>3 / 1</td><td>1,165</td><td>$460,000</td><td>$449,000</td><td>$486</td><td>30</td><td>1941</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1900 Quebec Street <span class="city-tag">Denver</span></td>
-            <td>3 / 2</td><td>1,231</td><td>$500,000</td><td>$492,000</td><td>$400</td><td>40</td><td>1947</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1285 Roslyn Street <span class="city-tag">Denver</span></td>
-            <td>3 / 2</td><td>1,236</td><td>$549,900</td><td>$500,000</td><td>$405</td><td>73</td><td>1941</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1632 Ulster Street <span class="city-tag">Denver</span></td>
-            <td>3 / 1</td><td>1,042</td><td>$440,000</td><td>$415,000</td><td>$398</td><td>74</td><td>1954</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1970 Willow Street <span class="city-tag">Denver</span></td>
-            <td>3 / 2</td><td>1,438</td><td>$475,000</td><td>$427,000</td><td>$361</td><td>96</td><td>1949</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1969 Uinta Street <span class="city-tag">Denver</span></td>
-            <td>3 / 2</td><td>912</td><td>$530,000</td><td>$430,000</td><td>$471</td><td>218</td><td>1942</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1910 Xenia Street <span class="city-tag">Denver</span></td>
-            <td>3 / 1</td><td>1,297</td><td>$425,000</td><td>&mdash;</td><td>$328</td><td>18</td><td>1947</td>
-            <td><span class="status-tag status-active">Active</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1769 Spruce Street <span class="city-tag">Denver</span></td>
-            <td>2 / 1</td><td>1,451</td><td>$400,000</td><td>&mdash;</td><td>$405</td><td>4</td><td>1925</td>
-            <td><span class="status-tag status-active">Active</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1750 Quince Street <span class="city-tag">Denver</span></td>
-            <td>4 / 1</td><td>1,482</td><td>$439,000</td><td>&mdash;</td><td>$523</td><td>48</td><td>1945</td>
-            <td><span class="status-tag status-active">Active</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1600 Xanthia Street <span class="city-tag">Denver</span></td>
-            <td>3 / 1</td><td>1,115</td><td>$500,000</td><td>&mdash;</td><td>$435</td><td>66</td><td>1951</td>
-            <td><span class="status-tag status-active">Active</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1103 Kearney Street <span class="city-tag">Denver</span></td>
-            <td>2 / 1</td><td>913</td><td>$490,000</td><td>&mdash;</td><td>$492</td><td>31</td><td>1942</td>
-            <td><span class="status-tag status-active">Active</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">2097 Hanover Street <span class="city-tag">Aurora</span></td>
-            <td>3 / 2</td><td>1,440</td><td>$460,000</td><td>$459,000</td><td>$638</td><td>16</td><td>1950</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1171 Geneva Street <span class="city-tag">Aurora</span></td>
-            <td>4 / 2</td><td>1,314</td><td>$438,800</td><td>$435,000</td><td>$331</td><td>9</td><td>1950</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1757 Dallas Street <span class="city-tag">Aurora</span></td>
-            <td>4 / 2</td><td>1,404</td><td>$440,000</td><td>$449,000</td><td>$640</td><td>8</td><td>1950</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1749 Havana Street <span class="city-tag">Aurora</span></td>
-            <td>3 / 1</td><td>1,008</td><td>$425,000</td><td>$422,000</td><td>$419</td><td>7</td><td>1950</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1793 Geneva Street <span class="city-tag">Aurora</span></td>
-            <td>3 / 2</td><td>1,364</td><td>$412,000</td><td>$415,000</td><td>$304</td><td>4</td><td>1949</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1789 Dallas Street <span class="city-tag">Aurora</span></td>
-            <td>4 / 2</td><td>1,478</td><td>$485,000</td><td>$485,000</td><td>$656</td><td>41</td><td>1950</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1345 Dallas Street <span class="city-tag">Aurora</span></td>
-            <td>3 / 2</td><td>960</td><td>$390,000</td><td>$400,000</td><td>$417</td><td>20</td><td>1951</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1210 Alton Street <span class="city-tag">Aurora</span></td>
-            <td>4 / 2</td><td>1,468</td><td>$400,000</td><td>$400,000</td><td>$536</td><td>52</td><td>1950</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1200 Iola Street <span class="city-tag">Aurora</span></td>
-            <td>2 / 2</td><td>1,416</td><td>$460,000</td><td>$444,000</td><td>$627</td><td>96</td><td>1951</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1620 Galena Street <span class="city-tag">Aurora</span></td>
-            <td>3 / 2</td><td>1,216</td><td>$475,000</td><td>$438,000</td><td>$502</td><td>105</td><td>1924</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">10595 E Lowry Place <span class="city-tag">Aurora</span></td>
-            <td>4 / 2</td><td>1,296</td><td>$449,900</td><td>$449,900</td><td>$347</td><td>83</td><td>1953</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1325 Dayton Street <span class="city-tag">Aurora</span></td>
-            <td>3 / 2</td><td>960</td><td>$489,900</td><td>$405,000</td><td>$422</td><td>173</td><td>1950</td>
-            <td><span class="status-tag status-sold">Sold</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1973 Alton Street <span class="city-tag">Aurora</span></td>
-            <td>4 / 2</td><td>1,420</td><td>$459,000</td><td>&mdash;</td><td>$309</td><td>46</td><td>1950</td>
-            <td><span class="status-tag status-pending">Pending</span></td>
-          </tr>
-          <tr>
-            <td class="addr-plain">1446 Jamaica Street <span class="city-tag">Aurora</span></td>
-            <td>3 / 2</td><td>1,203</td><td>$500,000</td><td>&mdash;</td><td>$585</td><td>130</td><td>1924</td>
-            <td><span class="status-tag status-active">Active</span></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="table-caption">Extended set drawn from Broker 1 Page MLS pulls (REcolorado / IRES), generated 06/22/2026. 1935 Geneva Street Lot 31 (built 2004) excluded as a build-year outlier inconsistent with the subject's 1940s-era profile.</div>
-  </section>
-
-  <section>
-    <h2 class="section-title">Comparative Positioning Analysis</h2>
-    <div class="positioning-grid">
-      <div class="pos-box strengths">
-        <h3>Subject Property Strengths</h3>
-        <ul>
-          <li><strong>Premium infrastructure:</strong> Fully updated main sewer line from the street to the house (2021), plus a brand-new roof and siding package completed in April 2023.</li>
-          <li><strong>Luxury component upgrades:</strong> High-end Renewal by Andersen windows and custom bedroom sliding doors (2023).</li>
-          <li><strong>Superior parking asset:</strong> Large, detached 2-car garage with smart WiFi openers, a clear advantage over comps like 1191 Niagara Street (0 garage spaces) and 1435 Quebec Street (1 garage space).</li>
-          <li><strong>Turnkey condition:</strong> Full custom bathroom remodel (2022) alongside modern HVAC and central air systems (2022).</li>
-        </ul>
-      </div>
-      <div class="pos-box considerations">
-        <h3>Market Considerations</h3>
-        <ul>
-          <li><strong>Seasonal market shift:</strong> Transaction momentum across the Denver metro area naturally moderates as the summer season begins, stretching average timelines.</li>
-          <li><strong>Sub-$450k active pool:</strong> Present inventory choices like 1220 Ulster Street and 1343 Valentia Street give buyers options in our immediate pricing layer.</li>
-          <li><strong>Floor plan specifics:</strong> The 1-bathroom profile requires filtering for buyers who prioritize premium mechanics, luxury upgrades, and garage capacity over multiple bathrooms.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="section-title">Narrative Market Analysis</h2>
-    <div class="narrative">
-      <p>As we move deeper into June, the Denver real estate market is transitioning through its expected seasonal shift. Following a productive spring market, buyer transaction velocity naturally tapers as summer vacations and lifestyle changes temporarily distribute attention elsewhere. This predictable pause means properties routinely experience extended days on market before securing an aligned offer, calling for a calculated and patient approach rather than immediate pricing adjustments. A broader pull of 38 comparable-era listings across Denver and Aurora reinforces this pattern, with Denver sold comps averaging 46.1 days on market this season and Aurora comps running even longer at 56.2 days.</p>
-      <p>Neighborhood data confirms that 1130 Quince Street is positioned where it needs to be to remain competitive. Our list price sits at $399 per square foot, an exceptional value when measured against recent closed neighborhood markers. 1191 Niagara Street recently closed at $538,000, a metric of $488 per square foot, despite lacking any garage space. 1154 Verbena Street closed at an above-grade metric of $566 per square foot. Even baseline properties with 3 bedrooms and less premium garage situations, like 1225 Roslyn Street, established a clear floor for our immediate market segment at $450,000.</p>
-      <p>Online consumer engagement remains encouragingly stable, demonstrating that the property continues to attract solid buyer awareness across both search platforms and social channels. Across the primary home search platforms, the listing has accumulated 651 views and 38 saves on Zillow, 111 views on Redfin, and an additional 568 views on Homes.com. Social promotion is extending that reach further, with 339 views and 125 engagements generated on Instagram. This aggregated digital exposure confirms the property is actively capturing the attention of the current buying pool. Given the extensive high-capital modernizations completed, including the complete main line sewer replacement, structural upgrades, and luxury Renewal by Andersen windows, our current strategy is to maintain position, exercise discipline, and let the marketing footprint connect with the right buyer.</p>
-    </div>
-  </section>
-
-  <section>
-    <h2 class="section-title">Strategic Positioning Recommendation</h2>
-    <div class="recommendation-box">
-      <div class="rec-label">Recommended Position</div>
-      <div class="rec-value">Maintain Current Pricing at $450,000</div>
-      <div class="rec-justify">
-        <div><strong>Structurally defensible:</strong> $399/sqft sits below every comparable closed PSF in the data set, including 1225 Roslyn Street's $450,000 floor.</div>
-        <div><strong>Patience over price cuts:</strong> Seasonal slowdown into late June favors holding position and letting premium upgrades reach the right buyer.</div>
-      </div>
-    </div>
-  </section>
-
-  <div class="disclaimer">
-    Disclaimer: This market analysis is an opinion of value provided for marketing and strategic planning purposes. It does not constitute a certified appraisal of the subject property. All data points are extracted from REcolorado MLS source records, accurate as of June 22, 2026.
+  <div class="footer">
+    <span>Jake Freedle, CNE &middot; Freedle And Associates &middot; jake@gofreedle.com &middot; 720.934.6583</span>
+    <span><a href="https://gofreedle.com">gofreedle.com</a></span>
   </div>
-
-  <footer>
-    <div class="foot-brand">Freedle<span class="and-assoc"> And Associates</span></div>
-    <div class="foot-meta">Office: 720-207-1318 &nbsp;|&nbsp; Scott Freedle &middot; Mari Deiss &middot; Megan Freedle</div>
-    <div class="foot-meta">Prepared for 1130 Quince Street Client &nbsp;|&nbsp; Date: June 22, 2026</div>
-    <div class="foot-tagline">Helping You Find Your Place.</div>
-  </footer>
 
 </div>
 </body>
